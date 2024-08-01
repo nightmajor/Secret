@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mabait ba Ako?</title>
+</head>
+<body>
+    <h1>Mabait ba Ako?</h1>
+    <p>Enter your name:</p>
+    <input type="text" id="name" placeholder="Your name">
+    <br><br>
+    <button onclick="respond('yes')">Yes</button>
+    <button onclick="respond('no')">No</button>
+    <p id="response"></p>
+
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init("Tenz"); // Replace "YOUR_USER_ID" with your EmailJS user ID
+        })();
+
+        function respond(answer) {
+            let name = document.getElementById('name').value;
+            let message;
+            if (answer === 'yes') {
+                message = "Yay kaibigan na Tayo";
+            } else {
+                message = ":(((";
+            }
+
+            document.getElementById('response').innerText = message;
+
+            if (name) {
+                emailjs.send("service_ezgewi8", "template_vtdkv6e", {
+                    name: name,
+                    answer: answer,
+                    message: message
+                })
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                }, function(error) {
+                    console.log('FAILED...', error);
+                });
+            } else {
+                alert("Please enter your name.");
+            }
+        }
+    </script>
+</body>
+</html>
